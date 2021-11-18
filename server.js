@@ -35,7 +35,7 @@ app.get(
         ];
 
         // SYNTAX: res.render(<viewFilename> , <object key:value to pass to the view>)
-        res.render('index', {articles: articles});
+        res.render('articles/index', {articles: articles});
     }
 );
 
