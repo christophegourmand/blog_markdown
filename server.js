@@ -20,7 +20,14 @@ app.get(
 app.get(
     '/',
     (req, res)=> {
-        res.render('index', {text: "Hello"});
+        const articles = [{
+            title: 'Test Article',
+            createdAt: Date.now(),
+            description: 'test description'
+        }];
+
+        // SYNTAX: res.render(<viewFilename> , <object key:value to pass to the view>)
+        res.render('index', {articles: articles});
     }
 );
 
