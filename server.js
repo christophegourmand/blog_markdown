@@ -20,6 +20,8 @@ app.get(
 app.get(
     '/',
     (req, res)=> {
+
+        // create fake articles datas.
         const articles = [
             {
                 title: 'Test Article',
@@ -34,8 +36,9 @@ app.get(
             }
         ];
 
-        // SYNTAX: res.render(<viewFilename> , <object key:value to pass to the view>)
+        // for route '/' , render view `articles/index.ejs` and pass fake articles datas.
         res.render('articles/index', {articles: articles});
+            // SYNTAX: res.render(<viewFilename> , <object key:value to pass to the view>)
     }
 );
 
