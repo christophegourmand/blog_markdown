@@ -1,7 +1,16 @@
 // CONFIGURE Express.js
 const express = require('express');
+const mongoose = require('mongoose');
 const articleRouter = require('./routes/articles');
 const app = express();
+
+mongoose.connect(
+    'mongodb://localhost/blog', 
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }
+);
 
 // configure view engine so EJS compile __.ejs into HTML files
 app.set('view engine', 'ejs');

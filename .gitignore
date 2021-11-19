@@ -1,4 +1,7 @@
 node_modules
 
-# fichier vs code:
+# vs code unwanted files:
 settings.json
+
+# file where I write changes for the commit-body of the next commit:
+NEXT_COMMIT.txt
