@@ -1,4 +1,5 @@
 const express = require('express');
+const Article_model = require('./../models/article');
 const router = express.Router();
 
 // route at uri /articles/
@@ -11,18 +12,49 @@ router.get(
 );
 */
 
-// route to create new article at `/articles/new`
+// route `/articles/new`  to get the new-article-form
 router.get(
     '/new',
     (req, res) =>{
-        res.render('articles/new');
+        res.render('articles/new', {article: new Article_model()} ); // to avoid an error, we pass an empty article model
     }
 );
 
+// route `/articles/🆔`  to get an article from database
+router.get(
+    '/:id',
+    (req, res) => {
+        res.send(req.params.id);
+    }
+)
+
+// route `/articles/` to post the new-article-form
 router.post(
     '/',
-    (req, res) => {
-        
+    async (req, res) => {
+        let newArticle = new Article_model({
+            title: req.body.title,
+            description: req.body.description,
+            markdown: req.body.markdown
+        });
+
+        try {
+            // update 'article' with saved-version from MongoDB
+            newArticle = await newArticle.save(); // this function is asyncronous!
+            res.redirect(`/articles/${newArticle.id}`)
+        } catch (err) {
+            // if error -> send the client back to new-article-form, and pass 'newArticle' just made higher so the form will be pre-filled.
+
+            // display error
+            let date = new Date();
+            console.log("============================================================================")
+            console.log(`                   ERROR at ${date.toLocaleTimeString()}                    `);
+            console.log("============================================================================")
+            console.error(err);
+
+            // make Client return to form
+            res.render('articles/new', {article: newArticle});
+        }
     }
 );
 

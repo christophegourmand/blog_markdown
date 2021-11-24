@@ -4,19 +4,25 @@
         - modify an article
     -->
 
+    <!-- in `routes/articles.js`
+        -> in route POST `/articles/`
+            -> if catch an error : render this page, and pass `{article: newArticle}`
+        
+        WE USE IT IN FOLLOWING FIELDS TO PRE-FILL THE TEXT FILLED BY THE CLIENT BEFORE AN ERROR OCCURED WHEN HE POSTED THE FORM.
+    -->
 <div class="form-group">
     <label for="title">Title</label>
-    <input type="text" name="title" id="title" class="form-control" required>
+    <input type="text" name="title" id="title" class="form-control" required value="<%= article.title %>">
 </div>
 
 <div class="form-group">
     <label for="description">description</label>
-    <textarea id="description" name="description" cols="" rows="3" class="form-control"></textarea>
+    <textarea id="description" name="description" cols="" rows="3" class="form-control"><%= article.description %></textarea>
 </div>
 
 <div class="form-group">
     <label for="markdown">Mardkdown</label>
-    <textarea id="markdown" name="markdown" cols="" rows="10" class="form-control"></textarea>
+    <textarea id="markdown" name="markdown" cols="" rows="10" class="form-control" required><%= article.markdown %></textarea>
 </div>
 
 <div class="mt-4">
