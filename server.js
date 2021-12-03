@@ -1,6 +1,7 @@
 // CONFIGURE Express.js
 const express = require('express');
 const mongoose = require('mongoose');
+const Article_model = require('./models/article');
 const articleRouter = require('./routes/articles');
 const app = express();
 
@@ -42,9 +43,9 @@ app.get(
 
 app.get(
     '/',
-    (req, res)=> {
+    async (req, res)=> {
 
-        // create fake articles datas.
+        /* // create fake articles datas.
         const fake_articles = [
             {
                 title: 'Test Article',
@@ -57,10 +58,12 @@ app.get(
                 createdAt: new Date(),
                 description: 'test description 2'
             }
-        ];
+        ]; */
+
+        const all_articles_from_mongo = await Article_model.find(); // this method is asynchronous, sw we add 'await' and also 'async' before the '(req,res)=>{..}'
 
         // for route '/' , render view `articles/index.ejs` and pass fake articles datas.
-        res.render('articles/index', {articles: fake_articles});
+        res.render('articles/index', {articles: all_articles_from_mongo});
             // SYNTAX: res.render(<viewFilename> , <object key:value to pass to the view>)
     }
 );
