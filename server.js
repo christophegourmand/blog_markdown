@@ -60,7 +60,10 @@ app.get(
             }
         ]; */
 
-        const all_articles_from_mongo = await Article_model.find(); // this method is asynchronous, sw we add 'await' and also 'async' before the '(req,res)=>{..}'
+        const all_articles_from_mongo = 
+            await Article_model
+                .find()  // the method `.find()` is asynchronous, so we add 'await' and also 'async' before the '(req,res)=>{..}'
+                .sort({createdAt: 'desc'}); 
 
         // for route '/' , render view `articles/index.ejs` and pass fake articles datas.
         res.render('articles/index', {articles: all_articles_from_mongo});
