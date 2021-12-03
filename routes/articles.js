@@ -23,8 +23,12 @@ router.get(
 // route `/articles/🆔`  to get an article from database
 router.get(
     '/:id',
-    (req, res) => {
-        res.send(req.params.id);
+    async (req, res) => {
+        const article_found = await Article_model.findById(req.params.id); // findById() is an async function
+        
+        if (article_found == null) res.redirect('/'); // if article is null, we send the client to the homepage.
+
+        res.render('articles/show' , {article: article_found});
     }
 )
 

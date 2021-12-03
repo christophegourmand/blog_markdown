@@ -33,7 +33,8 @@
   - will render 'article/new.ejs' --> the new-article-form  
 
 - GET `/articles/🆔`  
-  - will *give requested article from database* **[WIP]**
+  - will send a response with the id of article ou asked (temporarly)
+  - SOON : will *give requested article from database* **[WIP]**
 
 - POST `/articles/`
   1. will  create a new Article_model
