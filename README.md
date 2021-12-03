@@ -9,3 +9,5 @@ type command `npm install` , so all dependencies listed in file **package.json**
 ### Run server in dev mode
 
 run the command `npm run devStart`
+
+then connect to `localhost:5000`
