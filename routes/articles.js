@@ -3,14 +3,15 @@ const Article_model = require('./../models/article');
 const router = express.Router();
 
 // route at uri /articles/
-/*
+/* custom additional code _chris */
 router.get(
     '/',
     (req, res) =>{
-        res.send('Your are in /articles/')
+        res.send('Your are in route <code>/articles/</code> <br><strong>the article you asked had empty slug uri !</strong>')
     }
 );
-*/
+/* end of custom additional code. */
+
 
 // route `/articles/new`  to get the new-article-form
 router.get(
@@ -26,7 +27,7 @@ router.get(
     async (req, res) => {
         
         // ! async function                   ▼
-        const article_found = await Article_model.find({slug: req.params.slug}); 
+        const article_found = await Article_model.findOne({slug: req.params.slug}); 
         /* means : `find_me_the_article_matching_with( {as_key_slug: having_this_slug_from_request} )` */
         
         if (article_found == null) res.redirect('/'); // if article is null, we send the client to the homepage.
@@ -62,6 +63,15 @@ router.post(
             // make Client return to form
             res.render('articles/new', {article: newArticle});
         }
+    }
+);
+
+// route DELETE /articles/<id> to delete old articles who still have id, but don't have a slug.
+router.delete(
+    '/:id', 
+    async (req, res) => {
+        await Article.findByIdAndDelete(req.params.id);
+        res.redirect('/');
     }
 );
 

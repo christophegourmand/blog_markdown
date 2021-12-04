@@ -8,8 +8,9 @@ const app = express();
 mongoose.connect(
     'mongodb://localhost/blog', 
     {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
+        useNewUrlParser: true
+        , useUnifiedTopology: true
+        // , useCreateIndex: true
     }
 );
 
