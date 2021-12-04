@@ -24,8 +24,10 @@
   },
   "homepage": "https://github.com/christophegourmand/blog_markdown#readme",
   "dependencies": {
+    "dompurify": "^2.3.3",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "jsdom": "^19.0.0",
     "marked": "^4.0.6",
     "method-override": "^3.0.0",
     "mongoose": "^6.0.13",
