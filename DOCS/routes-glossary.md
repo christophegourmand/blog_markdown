@@ -18,7 +18,7 @@
 |        |                    | will save it in MongoDB |
 |        |                    | will redirect to `/articles/🆔` |
 |        |                    | if *error*, will render '/articles/new.ejs' form and |
-| GET    | `/articles/🆔`     | will *give requested article from database*    |
+| GET    | `/articles/<slug>`  | will *give requested article from database*    |
 |        |                    | then will render `/articles/show` and pass {article: article_found} as parameter |
 | GET    | `/articles/show`   | will show the article found in database    |
 
@@ -38,12 +38,12 @@
 - POST `/articles/`
   1. will  create a new Article_model
   2. will save it in MongoDB
-  3. will redirect to `/articles/🆔`
+  3. will redirect to `/articles/<slug>`
   4. if *error*,
       - will render '/articles/new.ejs' form
       - and will pass {article: newArticle} to the view
   
-- GET `/articles/🆔`  
+- GET `/articles/<slug>`  
   - will *give requested article from database*
   - then will render `/articles/show` and pass {article: article_found} as parameter
 

@@ -20,11 +20,14 @@ router.get(
     }
 );
 
-// route `/articles/🆔`  to get an article from database
+// route `/articles/<slug>`  to get an article from database
 router.get(
-    '/:id',
+    '/:slug',
     async (req, res) => {
-        const article_found = await Article_model.findById(req.params.id); // findById() is an async function
+        
+        // ! async function                   ▼
+        const article_found = await Article_model.find({slug: req.params.slug}); 
+        /* means : `find_me_the_article_matching_with( {as_key_slug: having_this_slug_from_request} )` */
         
         if (article_found == null) res.redirect('/'); // if article is null, we send the client to the homepage.
 
@@ -45,7 +48,7 @@ router.post(
         try {
             // update 'article' with saved-version from MongoDB
             newArticle = await newArticle.save(); // this function is asyncronous!
-            res.redirect(`/articles/${newArticle.id}`)
+            res.redirect(`/articles/${newArticle.slug}`)
         } catch (err) {
             // if error -> send the client back to new-article-form, and pass 'newArticle' just made higher so the form will be pre-filled.
 

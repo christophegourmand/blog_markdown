@@ -37,10 +37,12 @@ const articleSchema = new mongoose.Schema(
 /* we want to store the slug uri for each article in database. So we need to calculate the 'slug' once before it it stored */
 articleSchema.pre(
     'validate', 
-    function() {
+    function(next) {
         if (this.title) {
             this.slug = slugify( this.title , {lower: true , strict: true} );
         }
+
+        next();
     }
 );
 
