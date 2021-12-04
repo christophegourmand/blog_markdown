@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 const marked = require('marked');
 const slugify = require('slugify');
 
+const createDomPurify = require('dompurify');
+const { JSDOM } = require('jsdom'); 
+    /* Why JSDOM between brackets :
+        because require('jsdom') will return lot of things, from which we only want the part 'JSDOM'.
+    */
+const dompurify = createDomPurify(new JSDOM().window);
+    /* allow 'dompurify' to create HTML, and to purify it by using 'JSDOM().window' object */
+
 const articleSchema = new mongoose.Schema(
     {
         title: {
@@ -30,6 +38,10 @@ const articleSchema = new mongoose.Schema(
             type: String,
             required: true,
             unique: true  // to avoid 2 articles to have the same slug.
+        },
+        sanitizedHtml: {
+            type: String,
+            required: true
         }
     }
 );
@@ -40,6 +52,10 @@ articleSchema.pre(
     function(next) {
         if (this.title) {
             this.slug = slugify( this.title , {lower: true , strict: true} );
+        }
+
+        if (this.markdown) {
+            this.sanitizedHtml = dompurify.sanitize( marked.parse(this.markdown)); /* convert the markdown field into Html, then sanitize it, then store it in `this.sanitizedHtml` */
         }
 
         next();

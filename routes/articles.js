@@ -1,5 +1,5 @@
 const express = require('express');
-const Article_model = require('./../models/article');
+const Article = require('./../models/article');
 const router = express.Router();
 
 // route at uri /articles/
@@ -17,7 +17,17 @@ router.get(
 router.get(
     '/new',
     (req, res) =>{
-        res.render('articles/new', {article: new Article_model()} ); // to avoid an error, we pass an empty article model
+        res.render('articles/new', {article: new Article()} ); // to avoid an error, we pass an empty article model
+    }
+);
+
+// route `/articles/edit/<id>`  to get the new-article-form
+router.get(
+    '/edit/:id',
+    async (req, res) =>{
+        const article_to_edit = await Article.findById(req.params.id);
+
+        res.render('articles/edit', {article: article_to_edit } ); // to avoid an error, we pass an empty article model
     }
 );
 
@@ -27,7 +37,7 @@ router.get(
     async (req, res) => {
         
         // ! async function                   ▼
-        const article_found = await Article_model.findOne({slug: req.params.slug}); 
+        const article_found = await Article.findOne({slug: req.params.slug}); 
         /* means : `find_me_the_article_matching_with( {as_key_slug: having_this_slug_from_request} )` */
         
         if (article_found == null) res.redirect('/'); // if article is null, we send the client to the homepage.
@@ -39,17 +49,44 @@ router.get(
 // route `/articles/` to post the new-article-form
 router.post(
     '/',
+    async (req, res, next) => {
+        req.article = new Article();
+        next(); // allow us to go to the next parameter in our list : 'saveArticleAndRedirect(..)'
+    },
+    saveArticleAndRedirect('new')
+);
+
+router.put(
+    '/:id',
+    async (req, res, next) => {
+        req.article = await Article.findById(req.params.id);
+        next(); // allow us to go to the next parameter in our list : 'saveArticleAndRedirect(..)'
+    },
+    saveArticleAndRedirect('edit')
+);
+
+// route DELETE /articles/<id> to delete old articles who still have id, but don't have a slug.
+router.delete(
+    '/:id', 
     async (req, res) => {
-        let newArticle = new Article_model({
-            title: req.body.title,
-            description: req.body.description,
-            markdown: req.body.markdown
-        });
+        await Article.findByIdAndDelete(req.params.id);
+        res.redirect('/');
+    }
+);
+
+function saveArticleAndRedirect(path) {
+    return async (req, res) => {
+        let articleToSave = req.article;
+        articleToSave.title = req.body.title;
+        articleToSave.description = req.body.description;
+        articleToSave.markdown = req.body.markdown;
+        // let newArticle = new Article({
+        // });
 
         try {
             // update 'article' with saved-version from MongoDB
-            newArticle = await newArticle.save(); // this function is asyncronous!
-            res.redirect(`/articles/${newArticle.slug}`)
+            articleSaved = await articleToSave.save(); // this function is asyncronous!
+            res.redirect(`/articles/${articleSaved.slug}`)
         } catch (err) {
             // if error -> send the client back to new-article-form, and pass 'newArticle' just made higher so the form will be pre-filled.
 
@@ -61,18 +98,11 @@ router.post(
             console.error(err);
 
             // make Client return to form
-            res.render('articles/new', {article: newArticle});
+            res.render(`articles/${path}`, {article: newArticle});
+                /* ${path} will either be 'new' or 'edit' */
         }
     }
-);
+}
 
-// route DELETE /articles/<id> to delete old articles who still have id, but don't have a slug.
-router.delete(
-    '/:id', 
-    async (req, res) => {
-        await Article_model.findByIdAndDelete(req.params.id);
-        res.redirect('/');
-    }
-);
 
 module.exports = router;
