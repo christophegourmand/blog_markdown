@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Article_model = require('./models/article');
 const articleRouter = require('./routes/articles');
+const methodOverride = require('method-override');
 const app = express();
 
 mongoose.connect(
@@ -32,6 +33,13 @@ app.use( express.urlencoded({extended: false}) );
     */
     /* INFO3: this line '..urlencoded...' need to be BEFORE `app.use('/articles', articleRouter)` ,
     if not, we get an error that 'req.body.____' is not accessible. */
+
+
+/* source : https://www.npmjs.com/package/method-override 
+    as explained on the source website, to use "_method" allow us to make an action DELETE, 
+    by using `<form action="/articles/..... ?_method=DELETE" method="POST">`
+*/
+app.use(methodOverride("_method"));
 
 
 // ROUTES

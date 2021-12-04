@@ -70,7 +70,7 @@ router.post(
 router.delete(
     '/:id', 
     async (req, res) => {
-        await Article.findByIdAndDelete(req.params.id);
+        await Article_model.findByIdAndDelete(req.params.id);
         res.redirect('/');
     }
 );
