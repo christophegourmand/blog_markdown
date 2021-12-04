@@ -1,23 +1,21 @@
 const mongoose = require('mongoose');
+const marked = require('marked');
+const slugify = require('slugify');
 
 const articleSchema = new mongoose.Schema(
     {
-        title: 
-        {
+        title: {
             type: String,
             required: true
         },
-        description: 
-        {
+        description: {
             type: String
         },
-        markdown: 
-        {
+        markdown: {
             type: String,
             required: true
         },
-        createdAt:
-        {
+        createdAt:{
             type: Date,
             default: Date.now /* UPDATE 24nov2021 : replace `Date.now` with `Date`  */
             /* 
@@ -27,9 +25,25 @@ const articleSchema = new mongoose.Schema(
                 `Date.now` is used without `()` so the function isn't called now, 
                 but will be called every time we create an article.
             */
+        },
+        slug: {
+            type: String,
+            required: true,
+            unique: true  // to avoid 2 articles to have the same slug.
         }
     }
 );
+
+/* we want to store the slug uri for each article in database. So we need to calculate the 'slug' once before it it stored */
+articleSchema.pre(
+    'validate', 
+    function() {
+        if (this.title) {
+            this.slug = slugify( this.title , {lower: true , strict: true} );
+        }
+    }
+);
+
 
 /* `moogoose.model()` compile a model by making a copy of a 'schema' 
 - (Think of that: for example, a schema containing properties 'name:string' and 'id:int" could be used to compile models of many different things!).
