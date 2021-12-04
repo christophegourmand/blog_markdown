@@ -56,6 +56,7 @@ router.post(
     saveArticleAndRedirect('new')
 );
 
+// route `/articles/<id>` to edit the article
 router.put(
     '/:id',
     async (req, res, next) => {
