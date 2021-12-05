@@ -41,6 +41,10 @@ app.use( express.urlencoded({extended: false}) );
 */
 app.use(methodOverride("_method"));
 
+/* make 'public' folder accessible = served , by using `express.static` built-in middleware. */
+app.use( "/public", express.static('public') );
+// app.use( express.static(  ) );
+
 
 // ROUTES
 app.get(

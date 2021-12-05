@@ -5,3 +5,6 @@ settings.json
 
 # file where I write changes for the commit-body of the next commit:
 NEXT_COMMIT.txt
+
+# my todo list ;-)
+TODO.md

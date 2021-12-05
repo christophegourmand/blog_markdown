@@ -1,0 +1,67 @@
+/* variables -------------------------------------------------------- */
+
+
+/* left margin  ----------------------------------------------------- */
+#markdown h1 , #markdown h1 ~ p , #markdown h1 ~ pre {
+    margin-left: 0;
+}
+#markdown h2 , #markdown h2 ~ p , #markdown h2 ~ pre {
+    margin-left: 1rem;
+}
+#markdown h3 , #markdown h3 ~ p , #markdown h3 ~ pre {
+    margin-left: 2rem;
+}
+#markdown h4 , #markdown h4 ~ p , #markdown h4 ~ pre {
+    margin-left: 3rem;
+}
+#markdown h5 , #markdown h5 ~ p , #markdown h5 ~ pre {
+    margin-left: 4rem;
+}
+#markdown h6 , #markdown h6 ~ p , #markdown h6 ~ pre {
+    margin-left: 5rem;
+}
+
+/* colors  ----------------------------------------------------- */
+#markdown h1 {color: orangered;}
+#markdown h2 {color: #ffa100;}
+#markdown h3 {color: #3bdb00;}
+#markdown h4 {color: #00bae7;}
+#markdown h5 {color: #004cff;}
+#markdown h6 {color: #df01ce;}
+
+p {
+    color: #444;
+}
+
+#markdown strong {color: #3575b9;}
+#markdown em {color: #bf56c1;}
+
+/* special design - - - */
+
+/* for code inline */
+code {
+    padding-left: .3rem;
+    padding-right: .3rem;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: nowrap; /* = will not break at space */
+    /* font-weight: bold; */
+
+    /* v1 */
+    /* background-color: #ddd; */
+    /* color: red; */
+    
+    /* v2 */
+    background-color: #333;
+    color: white;
+}
+/* for code blocks */
+#markdown pre {
+    padding: 1rem;
+    background-color: #333;
+    color: white;
+}
+
+/* images sizes -------------------------------------------------*/
+#markdown p img {
+    width: 50%;
+}
