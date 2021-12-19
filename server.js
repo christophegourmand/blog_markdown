@@ -54,22 +54,20 @@ app.use(methodOverride("_method"));
 
 /* make 'public' folder accessible = served , by using `express.static` built-in middleware. */
 app.use( "/public", express.static('public') );
-// app.use( express.static(  ) );
-
 
 // ##################################################### 
 // ABOUT SASS
 
-const compiledScssAsCss = sass.compile(__dirname + "/public/css/style.scss");
+const compiledScssAsCss = sass.compile(__dirname + "/public/css/style_custom.scss");
 
 fs.writeFile(
-    __dirname+"/public/css/style.css", // param1: path to file to write
+    __dirname+"/public/css/style_custom.css", // param1: path to file to write
     compiledScssAsCss.css, // param2: datas to write inside (typed as String) 
     err =>{                // param3: callback who receive 'error' to handle. 
         if (err) {
             console.error(err);
             return;
-        }   
+        }
     }
 );
 

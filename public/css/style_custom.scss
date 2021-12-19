@@ -1,0 +1,90 @@
+/* variables -------------------------------------------------------- */
+/* none yet */
+
+/* BASE ========================================================= */
+
+/* left margin  ------------------------------------------------- */
+
+#markdown {
+
+    h1 , h1 ~ p , h1 ~ pre {
+        margin-left: 0;
+    }
+
+    h2 , h2 ~ p , h2 ~ pre {
+        margin-left: 1rem;
+    }
+
+    h3 , h3 ~ p , h3 ~ pre {
+        margin-left: 2rem;
+    }
+
+    h4 , h4 ~ p , h4 ~ pre {
+        margin-left: 3rem;
+    }
+
+    h5 , h5 ~ p , h5 ~ pre {
+        margin-left: 4rem;
+    }
+
+    h6 , h6 ~ p , h6 ~ pre {
+        margin-left: 5rem;
+    }
+}
+
+/* colors  ----------------------------------------------------- */
+#markdown {
+    h1 {color: orangered;}
+    h2 {color: #ffa100;}
+    h3 {color: #3bdb00;}
+    h4 {color: #00bae7;}
+    h5 {color: #004cff;}
+    h6 {color: #df01ce;}
+
+    p {
+        color: #444;
+    }
+
+    strong {color: #3575b9;}
+    em {color: #bf56c1;}
+}    
+/* special design #############################################  */
+
+/* for code inline -------------------------------------------- */
+#markdown {
+    code {
+        padding-left: .3rem;
+        padding-right: .3rem;
+        font-family: 'Courier New', Courier, monospace;
+        white-space: nowrap; /* = will not break at space */
+        /* font-weight: bold; */
+
+        /* v1 */
+        /* background-color: #ddd; */
+        /* color: red; */
+        
+        /* v2 */
+        background-color: #333;
+        color: white;
+    }
+}
+/* for code blocks --------------------------------------------- */
+#markdown {
+    pre {
+        padding: 1rem;
+        background-color: #333;
+        color: white;
+    }
+}
+
+/* images sizes -------------------------------------------------*/
+
+#markdown {
+    p img {
+        width: 50%;
+    }
+}
+
+
+
+
