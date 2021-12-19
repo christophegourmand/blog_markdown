@@ -3,7 +3,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Article_model = require('./models/article');
 const articleRouter = require('./routes/articles');
-const methodOverride = require('method-override');
+const methodOverride = require('method-override'); // ability to use methods PUT and DELETE using method POST.
+
+// about SASS:
+const sass = require('sass');
+const fs = require('fs'); // to write style.css
+const { dirname } = require('path');
+
 const app = express();
 
 mongoose.connect(
@@ -41,12 +47,35 @@ app.use( express.urlencoded({extended: false}) );
 */
 app.use(methodOverride("_method"));
 
+// ##################################################### 
+// About Public Folder 
+// ##################################################### 
+// About Public Folder 
+
 /* make 'public' folder accessible = served , by using `express.static` built-in middleware. */
 app.use( "/public", express.static('public') );
 // app.use( express.static(  ) );
 
 
-// ROUTES
+// ##################################################### 
+// ABOUT SASS
+
+const compiledScssAsCss = sass.compile(__dirname + "/public/css/style.scss");
+
+fs.writeFile(
+    __dirname+"/public/css/style.css", // param1: path to file to write
+    compiledScssAsCss.css, // param2: datas to write inside (typed as String) 
+    err =>{                // param3: callback who receive 'error' to handle. 
+        if (err) {
+            console.error(err);
+            return;
+        }   
+    }
+);
+
+// ##################################################### 
+// ROUTER :  routes at `/` or `/something`
+
 app.get(
     '/hello',
     (req, res)=> {
@@ -84,7 +113,14 @@ app.get(
     }
 );
 
+// ##################################################### 
+// SUB-ROUTER : routes at `/articles` or `/articles/something`
+
 // every route in our articleRouter will be created at the end of uri '/articles/'
 app.use('/articles', articleRouter)
+
+
+// #####################################################
+// SERVER READY WHEN LISTENING
 
 app.listen(5000);
